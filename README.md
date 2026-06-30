@@ -15,16 +15,27 @@ Inspired by [frontend-slides](https://github.com/zarazhangrui/frontend-slides), 
 
 ## 📦 Installation
 
-1. Clone this repository into your skills directory.
-2. If you are using OpenCode, place it in the location where skills are discovered.
-3. Install Node.js for PDF export and deployment workflows.
+This repository can be used as a reusable report-generation skill by local coding agents and CLI-based assistants such as OpenCode, Codex, Kimi Code, Gemini CLI, and similar tools.
+
+### Recommended setup
+
+1. Clone the repository to your local machine.
+2. Make sure the folder is available to the agent in the same workspace or skills directory it uses for local tools.
+3. Install Node.js if you want to use the PDF export or deployment scripts.
+4. Review the core files before generating a report:
+   - `SKILL.md` for the instructions and workflow
+   - `report-template.md` for the HTML structure
+   - `report-base.css` for shared styling and page layout
+   - `STYLE_PRESETS.md` for available visual presets
 
 ```bash
 git clone https://github.com/IbrahimMajdi/frontend-reports.git
 cd frontend-reports
 ```
 
-PDF export will install Playwright automatically on first use.
+### Notes for agents
+
+The simplest workflow is to give the agent the GitHub repository link and ask it to use the Frontend Reports skill to generate or refine a report. For PDF export, the script will install Playwright automatically on first use. For live sharing, the deployment script uses Vercel and requires an account if you want to publish the report online.
 
 ## 🛠️ Usage
 
