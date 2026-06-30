@@ -1,0 +1,849 @@
+/* =============================================
+   A4 PRINT-FIRST REPORT: MANDATORY BASE STYLES
+   Include this ENTIRE file in every report.
+   Designed for 210mm x 297mm with 20/22mm margins.
+   ============================================= */
+
+/* === 1. Print Page Setup === */
+
+@page {
+    size: A4;
+    margin: 0;
+    orphans: 3;
+    widows: 3;
+}
+
+@media print {
+    @page {
+        margin: 0;
+    }
+}
+
+/* === 2. Reset & Base === */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 112.5%; /* 18px base for screen */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    line-height: var(--body-leading);
+    color: var(--color-text);
+    background: var(--color-page-bg);
+    counter-reset: section-counter page-counter;
+}
+
+/* === 3. Page Grid === */
+
+:root {
+    --page-x: var(--page-margin-inner, 22mm);
+    --page-y: var(--page-margin-top, 20mm);
+}
+
+.page {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: var(--page-y) var(--page-x);
+    background: var(--color-page-bg, #fff);
+    color: var(--color-text, #1a1a1a);
+    overflow: hidden;
+    page-break-before: always;
+    page-break-inside: avoid;
+}
+
+.page:first-of-type {
+    page-break-before: avoid;
+}
+
+/* === 4. Print-Specific Overrides === */
+
+@media print {
+    html {
+        font-size: 12pt;
+        background: #fff !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    .page {
+        position: relative;
+        width: 210mm;
+        min-height: 297mm;
+        padding: var(--page-y) var(--page-x);
+        margin: 0;
+        background: #fff !important;
+        box-shadow: none;
+        page-break-before: always;
+        page-break-inside: avoid;
+    }
+
+    .page:first-of-type {
+        page-break-before: avoid;
+    }
+
+    .cover-page {
+        padding: 28mm var(--page-x);
+        min-height: 297mm;
+        background: var(--color-cover-bg, #fff) !important;
+    }
+
+    .page-header {
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 12mm;
+        padding: 0 var(--page-x);
+        border-bottom: 0;
+    }
+
+    .page-header::after {
+        content: "";
+        position: absolute;
+        left: var(--page-x);
+        right: var(--page-x);
+        bottom: 0;
+        border-bottom: 1px solid var(--color-rule, #ddd);
+    }
+
+    .page-footer {
+        position: absolute;
+        display: flex;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 12mm;
+        padding: 0 var(--page-x);
+        border-top: 0;
+    }
+
+    .page-footer::before {
+        content: "";
+        position: absolute;
+        left: var(--page-x);
+        right: var(--page-x);
+        top: 0;
+        border-top: 1px solid var(--color-rule, #ddd);
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .screen-only {
+        display: none !important;
+    }
+
+    .print-only {
+        display: block;
+    }
+}
+
+/* === 5. Screen Presentation === */
+
+@media screen {
+    body {
+        background: var(--color-screen-bg, #f5f5f0);
+    }
+
+    .page {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        margin: 2rem auto;
+        border-radius: 2px;
+    }
+
+    .page:first-of-type {
+        margin-top: 0;
+    }
+
+    .page:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+/* === 5b. Print Override for Screen-Only Layouts === */
+
+@media print {
+    .fade-in, .fade-in-scale,
+    [class*="fade-"] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    section:not(.page) {
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    section.full {
+        max-width: 100%;
+    }
+
+    section:not(.page) {
+        padding: 3rem 2rem;
+    }
+
+    .hero-scroll,
+    .hero .hero-scroll {
+        display: none !important;
+    }
+
+    svg, img, figure {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+
+    .counter, [class*="counter"] {
+        font-size: 2.5rem !important;
+    }
+
+    .stacked-bar,
+    .simple-bar-fill {
+        width: 100% !important;
+    }
+
+    .stacked-bar .seg {
+        display: inline-block !important;
+        height: 24px !important;
+    }
+
+    .hero {
+        min-height: auto !important;
+        padding: 4rem 3rem !important;
+    }
+
+    .photo-breaker {
+        aspect-ratio: auto !important;
+        min-height: 180px !important;
+        padding: 3rem !important;
+    }
+
+    .photo-breaker .geo-pattern {
+        display: none !important;
+    }
+
+    .impact-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .impact-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .site-footer {
+        padding: 2rem !important;
+        page-break-inside: avoid;
+    }
+
+    .donor-grid {
+        gap: 0.4rem 1rem !important;
+    }
+
+    .cta-section {
+        padding: 4rem 3rem !important;
+    }
+
+    .map-section .map-container {
+        max-width: 90% !important;
+    }
+
+    /* Keep browser PDF margins at zero. The report page owns all padding. */
+}
+
+/* === 6. Page Chrome: Headers & Footers === */
+
+.page-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 14mm;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--page-x);
+    border-bottom: 0;
+    font-size: var(--small-size);
+    color: var(--color-muted, #888);
+}
+
+.page-header::after {
+    content: "";
+    position: absolute;
+    left: var(--page-x);
+    right: var(--page-x);
+    bottom: 0;
+    border-bottom: 1px solid var(--color-rule, #ddd);
+}
+
+.page-header .section-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 14mm;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 var(--page-x);
+    border-top: 0;
+    font-size: var(--small-size);
+    color: var(--color-muted, #888);
+}
+
+.page-footer::before {
+    content: "";
+    position: absolute;
+    left: var(--page-x);
+    right: var(--page-x);
+    top: 0;
+    border-top: 1px solid var(--color-rule, #ddd);
+}
+
+.page-footer .page-num {
+    font-variant-numeric: tabular-nums;
+}
+
+/* === 7. Cover Page === */
+
+.cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30mm var(--page-x);
+    background: var(--color-cover-bg, var(--color-page-bg));
+    color: var(--color-cover-text, var(--color-text));
+    min-height: 297mm;
+}
+
+.cover-page .cover-label {
+    font-family: var(--font-heading);
+    font-size: var(--small-size);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+}
+
+.cover-page .cover-title {
+    font-family: var(--font-display);
+    font-size: var(--cover-title-size);
+    line-height: 1.1;
+    font-weight: 800;
+    max-width: 80%;
+    margin-bottom: 0.75rem;
+}
+
+.cover-page .cover-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--subtitle-size);
+    line-height: 1.4;
+    color: var(--color-muted);
+    max-width: 70%;
+    margin-bottom: 2rem;
+}
+
+.cover-page .cover-meta {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    color: var(--color-muted);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 2px solid var(--color-accent);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* === 8. Table of Contents === */
+
+.toc-page {
+    counter-reset: toc-section;
+}
+
+.toc-title {
+    font-family: var(--font-heading);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-list li {
+    display: flex;
+    align-items: baseline;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-rule, #eee);
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+}
+
+.toc-list li .toc-num {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-accent);
+    min-width: 2.5rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.toc-list li .toc-label {
+    flex: 1;
+}
+
+.toc-list li .toc-leader {
+    flex: 0 1 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--color-rule, #ccc);
+    margin: 0 0.5rem;
+}
+
+.toc-list li .toc-page-ref {
+    font-family: var(--font-heading);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted, #999);
+    min-width: 1.5rem;
+    text-align: right;
+}
+
+.toc-subs {
+    list-style: none;
+    padding-left: 2.5rem;
+    margin-top: 0.3rem;
+}
+
+.toc-subs li {
+    padding: 0.3rem 0;
+    font-size: 0.9em;
+    border-bottom: none;
+}
+
+/* === 9. Section Page === */
+
+.section-page {
+    counter-increment: page-counter;
+    padding-top: 20mm;
+}
+
+.section-page .section-number {
+    font-family: var(--font-heading);
+    font-size: var(--small-size);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+}
+
+.section-page .section-heading {
+    font-family: var(--font-display);
+    font-size: var(--h1-size);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.section-page .section-rule {
+    width: 3rem;
+    height: 3px;
+    background: var(--color-accent);
+    margin-bottom: 1.5rem;
+    border: none;
+}
+
+/* === 10. Content Grid === */
+
+.page-content {
+    position: relative;
+}
+
+.page-content.col-1 {
+    column-count: 1;
+    max-width: none;
+}
+
+.page-content.col-2 {
+    column-count: 2;
+    column-gap: 8mm;
+    column-rule: 1px solid var(--color-rule, #eee);
+}
+
+.page-content.col-3 {
+    column-count: 3;
+    column-gap: 6mm;
+    column-rule: 1px solid var(--color-rule, #eee);
+}
+
+/* === 11. Typography === */
+
+.page-content p {
+    margin-bottom: 0.75rem;
+    text-align: left;
+    hyphens: auto;
+}
+
+.page-content p:last-child {
+    margin-bottom: 0;
+}
+
+.page-content h2 {
+    font-family: var(--font-heading);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.page-content h3 {
+    font-family: var(--font-heading);
+    font-size: var(--h3-size);
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.35;
+}
+
+.page-content h4 {
+    font-family: var(--font-heading);
+    font-size: var(--h4-size);
+    font-weight: 600;
+    font-style: italic;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+
+/* === 12. Lists === */
+
+.page-content ul,
+.page-content ol {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+}
+
+.page-content li {
+    margin-bottom: 0.3rem;
+}
+
+.page-content li:last-child {
+    margin-bottom: 0;
+}
+
+/* === 13. Tables === */
+
+.page-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9em;
+    break-inside: avoid;
+}
+
+.page-content thead th {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 2px solid var(--color-text, #1a1a1a);
+    background: var(--color-table-header-bg, transparent);
+}
+
+.page-content tbody td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--color-rule, #eee);
+    vertical-align: top;
+}
+
+.page-content tbody tr:nth-child(even) {
+    background: var(--color-table-stripe, rgba(0, 0, 0, 0.02));
+}
+
+.page-content tbody tr:hover {
+    background: var(--color-table-hover, rgba(0, 0, 0, 0.04));
+}
+
+.page-content table td:last-child,
+.page-content table th:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* === 14. Blockquotes & Callouts === */
+
+.page-content blockquote {
+    margin: 1.25rem 0;
+    padding: 0.75rem 1rem 0.75rem 1.5rem;
+    border-left: 4px solid var(--color-accent);
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--color-muted, #555);
+    background: var(--color-callout-bg, rgba(0, 0, 0, 0.02));
+}
+
+.callout {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--color-accent);
+    background: var(--color-callout-bg, #f8f8f8);
+    font-size: 0.95em;
+    break-inside: avoid;
+}
+
+.callout.callout-warning {
+    border-left-color: #e8a838;
+    background: #fef9ed;
+}
+
+.callout.callout-info {
+    border-left-color: #3b82f6;
+    background: #f0f5ff;
+}
+
+/* === 15. Code Blocks === */
+
+.page-content code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--color-code-bg, #f0f0ee);
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+}
+
+.page-content pre {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    background: var(--color-code-bg, #f5f5f0);
+    border: 1px solid var(--color-rule, #e0e0d8);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    break-inside: avoid;
+}
+
+.page-content pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* === 16. Figures & Images === */
+
+.page-content figure {
+    margin: 1.25rem 0;
+    text-align: center;
+    break-inside: avoid;
+}
+
+.page-content figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+.page-content figure figcaption {
+    font-size: var(--small-size);
+    color: var(--color-muted, #888);
+    margin-top: 0.4rem;
+    font-style: italic;
+}
+
+/* === 17. Footnotes === */
+
+.footnotes {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-rule, #ddd);
+    font-size: var(--small-size);
+}
+
+.footnotes ol {
+    padding-left: 1.2rem;
+}
+
+.footnotes li {
+    margin-bottom: 0.3rem;
+    color: var(--color-muted, #666);
+}
+
+.fn-ref {
+    font-size: 0.75em;
+    vertical-align: super;
+    line-height: 1;
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+/* === 18. Utility Classes === */
+
+.page-break {
+    page-break-before: always;
+}
+
+.avoid-break {
+    page-break-inside: avoid;
+}
+
+.screen-only {
+    display: none;
+}
+
+@media screen {
+    .screen-only {
+        display: initial;
+    }
+}
+
+.print-only {
+    display: none;
+}
+
+@media print {
+    .print-only {
+        display: initial;
+    }
+}
+
+/* === 19. PDF Export Guardrails === */
+
+@media print {
+    .page {
+        height: 297mm;
+        max-height: 297mm;
+    }
+
+    .section-page {
+        padding-top: 18mm;
+        padding-bottom: 16mm;
+    }
+
+    .page-content h2 {
+        margin-top: 1rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .page-content h3,
+    .page-content h4 {
+        margin-top: 0.7rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .page-content p,
+    .page-content li {
+        margin-bottom: 0.45rem;
+    }
+
+    .lead {
+        font-size: 1.05em;
+        line-height: 1.48;
+    }
+
+    .section-page .section-heading {
+        margin-bottom: 0.35rem;
+    }
+
+    .section-page .section-rule {
+        margin-bottom: 1rem;
+    }
+
+    .page-content table {
+        margin: 0.7rem 0;
+    }
+
+    .page-content thead th,
+    .page-content tbody td {
+        padding: 0.32rem 0.48rem;
+    }
+
+    .page-content blockquote,
+    .callout,
+    .page-content pre,
+    .page-content figure,
+    .avoid-break {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .page-content blockquote,
+    .callout,
+    .page-content pre {
+        margin: 0.7rem 0;
+    }
+
+    .charts-grid,
+    .impact-grid,
+    .donor-grid,
+    .grid,
+    [class*="grid"] {
+        gap: 0.8rem !important;
+    }
+}
+
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+.text-justify { text-align: justify; }
+
+.lead {
+    font-size: 1.15em;
+    line-height: 1.6;
+    color: var(--color-muted, #555);
+}
+
+.small {
+    font-size: var(--small-size);
+    color: var(--color-muted, #888);
+}
+
+.dropcap::first-letter {
+    font-family: var(--font-display);
+    font-size: 3em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.3rem;
+    color: var(--color-accent);
+}
